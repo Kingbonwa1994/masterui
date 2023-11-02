@@ -1,24 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useRef } from "react"
+import Navigation from './components/Navigation';
+
 
 function App() {
+  const navigationRef = useRef(null)
+
+  useEffect(() => {
+    if (navigationRef.current) {
+      navigationRef.current.style.pointerEvents = "none";
+    }
+
+    return () => {
+      if (navigationRef.current) {
+        navigationRef.current.style.pointerEvents = "all";
+      }
+    };
+  }, [navigationRef]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div style={{ pointerEvents: "none" }} className="App">
+      
+      <Navigation ref={navigationRef} style={{ zIndex:1 }} />
+    
+      
+      </div>
   );
 }
 
